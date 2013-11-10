@@ -1,7 +1,8 @@
 #include "Scenegraph.h"
 
 SceneGraph::SceneGraph() {
-	std::vector< int > numbers;
+	Group coordinate;
+	children.push_back(coordinate);
 }
 
 SceneGraph::~SceneGraph() {
@@ -13,7 +14,9 @@ void SceneGraph::update() {
 }
 
 void SceneGraph::draw() {
-	
+	for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
+		children[i].draw();
+	}
 }
 
 
