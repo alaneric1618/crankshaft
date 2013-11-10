@@ -2,4 +2,6 @@
 bunny.obj
 obj/
 #*
+*#*
+.#*
 barrel-bump
