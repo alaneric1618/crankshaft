@@ -13,6 +13,10 @@ void Group::update() {
 }
 
 void Group::draw() {
+	for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
+		children[i].draw();
+	}
+
 	glDisable(GL_LIGHTING);
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glColor3f(0.9, 0.9, 0.9);
