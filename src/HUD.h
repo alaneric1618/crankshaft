@@ -1,0 +1,7 @@
+class HUD {
+
+ private:
+
+ public:
+
+};
