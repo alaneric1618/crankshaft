@@ -11,29 +11,35 @@ LIBRARIES  = -lGL -lGLU -lm -ltcl
 FRAMEWORKS = -framework GLUT -framework OpenGL
 CFLAGS     = -Wall -Wno-deprecated -c -frounding-math
 LFLAGS     = -Wall $(FRAMEWORKS) $(LIBPATH) $(LIBRARIES)
-OBJS       = obj/Game.o obj/SceneGraph.o obj/HUD.o obj/GameState.o obj/GameTimer.o obj/Updatable.o obj/Drawable.o obj/Group.o
+OBJS       = obj/Game.o obj/SceneGraph.o obj/HUD.o obj/GameState.o obj/GameTimer.o obj/Updatable.o obj/Drawable.o obj/Group.o obj/Car.o obj/Frame.o
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(LD) $(LFLAGS) $(OBJS) -o $(TARGET)
 
-obj/Game.o: src/Game.cpp
+obj/Game.o: src/Game.cpp src/Game.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/SceneGraph.o: src/SceneGraph.cpp
+obj/SceneGraph.o: src/SceneGraph.cpp src/SceneGraph.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/HUD.o: src/HUD.cpp
+obj/HUD.o: src/HUD.cpp src/HUD.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/GameState.o: src/GameState.cpp
+obj/GameState.o: src/GameState.cpp src/GameState.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/GameTimer.o: src/GameTimer.cpp
+obj/GameTimer.o: src/GameTimer.cpp src/GameTimer.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/Group.o: src/Group.cpp
+obj/Frame.o: src/Frame.cpp src/Frame.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+obj/Group.o: src/Group.cpp src/Group.h src/Frame.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+obj/Car.o: src/Car.cpp src/Car.h src/Group.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 obj/Updatable.o: src/Updatable.h

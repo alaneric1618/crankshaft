@@ -66,7 +66,7 @@ void Game::draw(void) {
   //glRotatef(rotation[1], -1.0, 0.0, 0.0);
   //glRotatef(rotation[2], 0.0, 0.0, 1.0);
 
-	Game::sceneGraph->draw();
+  Game::sceneGraph->draw();
 
   glFlush();
   glutSwapBuffers();

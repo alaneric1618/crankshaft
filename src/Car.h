@@ -1,4 +1,5 @@
 #include <vector>
+#include <OpenGl/gl.h>
 
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
@@ -14,16 +15,12 @@
 #define GROUP_H
 #include "Group.h"
 #endif
+ 
 
-#include "Car.h"
+class Car : public Group, public Updatable, public Drawable {	
 
-class SceneGraph : public Updatable, public Drawable {
-private:
-  std::vector< Group* > children;
-public:
-  SceneGraph();
-  ~SceneGraph();
-  virtual void draw();
-  virtual void update();
+ public:
+	virtual void update();
+	virtual void draw();
 
 };

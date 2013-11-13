@@ -12,14 +12,22 @@
 #include "Drawable.h"
 #endif
 
+#ifndef FRAME_H
+#define FRAME_H
+#include "Frame.h"
+#endif
+
+
+
 class Group : public Updatable, public Drawable {	
 
- private:
-	std::vector< Group > children;
- public:
-	Group();
-	~Group();
-	virtual void update();
-	virtual void draw();
-
+protected:
+  Frame* frame;
+  std::vector< Group* > children;
+public:
+  Group();
+  virtual ~Group();
+  virtual void update();
+  virtual void draw();
+  virtual void add(Group* group);
 };
