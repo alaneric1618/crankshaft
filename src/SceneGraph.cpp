@@ -3,10 +3,7 @@
 
 
 SceneGraph::SceneGraph() {
-  Group* coordinate = new Group;
-  Car* car = new Car;
-  coordinate->add(car);
-  children.push_back( coordinate );
+	
 }
 
 SceneGraph::~SceneGraph() {
@@ -24,5 +21,12 @@ void SceneGraph::draw() {
     children[i]->draw();
   }
 }
+
+void SceneGraph::add(Group* group) {
+  if (group != NULL) {
+    children.push_back(group);
+  }
+}
+
 
 

@@ -15,8 +15,6 @@
 #include "Group.h"
 #endif
 
-#include "Car.h"
-
 class SceneGraph : public Updatable, public Drawable {
 private:
   std::vector< Group* > children;
@@ -25,5 +23,5 @@ public:
   ~SceneGraph();
   virtual void draw();
   virtual void update();
-
+  void add(Group* group);
 };

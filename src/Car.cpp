@@ -1,6 +1,7 @@
 #include "Car.h"
 
 void Car::update() {
+  frame->rotationZ -= 0.2;
   for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->update();
   }
@@ -10,7 +11,6 @@ void Car::draw() {
   
   glPushMatrix();
 
-  frame->rotationY -= 0.4;
   glScalef(frame->scaleX, frame->scaleY, frame->scaleZ);
   glTranslatef(frame->x, frame->y, frame->z);
   glRotatef(frame->rotationX, -1.0, 0.0, 0.0);
@@ -33,6 +33,7 @@ void Car::draw() {
       glVertex3fv(&v1[0]);
       glVertex3fv(&v4[0]);
       glVertex3fv(&v2[0]);
+      
       glVertex3fv(&v1[0]);
       glVertex3fv(&v3[0]);
       glVertex3fv(&v4[0]);

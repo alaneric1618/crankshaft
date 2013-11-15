@@ -25,7 +25,6 @@ void Group::update() {
 
 void Group::draw() {
   glPushMatrix();
-	frame->rotationX += 0.1;
   glScalef(frame->scaleX, frame->scaleY, frame->scaleZ);
   glTranslatef(frame->x, frame->y, frame->z);
   glRotatef(frame->rotationX, -1.0, 0.0, 0.0);

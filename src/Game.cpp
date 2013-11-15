@@ -7,13 +7,21 @@
 
 //c libraries
 #include <OpenGL/gl.h>
+
+#ifndef GLU_H
+#define GLU_H
 #include <OpenGL/glu.h>
+#endif
+
 #include <GLUT/glut.h>
 #include <cstdlib>
 
 #include "Game.h"
 
-SceneGraph* Game::sceneGraph = new SceneGraph();
+int Game::gameState = 0; //set game to loading state
+HUD* Game::hud = new HUD();
+Camera* Game::camera = new Camera();
+SceneGraph* Game::sceneGraph = new SceneGraph();	
 
 void Game::keyboard (unsigned char key, int x, int y) {
   switch (key) {
@@ -29,11 +37,11 @@ void Game::keyboardSpecial (int key, int x, int y) {
 	switch (key) {
 		//Camera Movement
 	case GLUT_KEY_UP: 
-
+		Game::gameState = 2;
 		break;
 
 	case GLUT_KEY_DOWN: 
-
+		Game::gameState = 1;
 		break;
 
 	case GLUT_KEY_LEFT:
@@ -49,9 +57,36 @@ void Game::keyboardSpecial (int key, int x, int y) {
 	}
 }
 
+
+void Game::initScene() {
+	//Create Object
+	Group* coordinate = new Group;
+  Car* car = new Car;
+
+	//Add Objects to Scene
+	coordinate->add(car);
+	Game::sceneGraph->add( coordinate );
+	//set game to active state
+	Game::gameState = 1;
+}
+
+
+
 // Should only be used for physics simulation
 void Game::update() {
-	Game::sceneGraph->update();
+	switch (Game::gameState) {
+	case 0: //loading 
+		break;
+	case 1: //active
+		Game::camera->update(); 
+		Game::sceneGraph->update();
+		break;
+	case 2: //paused
+		break;
+	case 3: //error
+		break;
+	}
+
   draw();
 }
 
@@ -59,14 +94,25 @@ void Game::update() {
 // Primary draw loop from which all other drawing happens.
 void Game::draw(void) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  glPushMatrix();
-  //glScalef(zoom, zoom, zoom);
-  //glTranslatef(translation[0], translation[1], translation[2]);
-  //glRotatef(rotation[0], 0.0, 1.0, 0.0);
-  //glRotatef(rotation[1], -1.0, 0.0, 0.0);
-  //glRotatef(rotation[2], 0.0, 0.0, 1.0);
+  //glPushMatrix();
 
-  Game::sceneGraph->draw();
+	switch (Game::gameState) {
+	case 0: //loading 
+		break;
+	case 1: //active
+		Game::camera->draw();
+		Game::sceneGraph->draw();
+		break;
+	case 2: //paused
+		Game::hud->drawPaused();
+
+		Game::sceneGraph->draw();
+		break;
+	case 3: //error
+		break;
+	}
+
+
 
   glFlush();
   glutSwapBuffers();
@@ -77,11 +123,9 @@ void Game::reshape(int width, int height)
   glViewport(0, 0, width, height);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  if (width <= height) {
-    glOrtho(-2.0, 2.0, -2.0*(GLfloat)height/(GLfloat)width, 2.0*(GLfloat)height/(GLfloat)width,-600, 600);
-  } else { 
-    glOrtho(-2.0*(GLfloat)width/(GLfloat)height, 2.0*(GLfloat)width/(GLfloat)height, -2.0,2.0, -600, 600); 
-  }
+  
+  gluPerspective(37.8, ((double)width/(double)height), 1, 1000);
+
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 }
@@ -136,6 +180,7 @@ void Game::readFile(int argc, char** argv) {
 
 int main(int argc, char** argv)
 {
+	Game::initScene();
   Game::initGlut(argc, argv);
   return 0;
 }

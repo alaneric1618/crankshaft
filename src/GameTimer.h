@@ -1,7 +1,0 @@
-class GameTimer {
-
- private:
-
- publict:
-
-};

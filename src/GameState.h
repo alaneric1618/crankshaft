@@ -1,7 +1,0 @@
-class GameState {
-
- private:
-
- public:
-
-};
