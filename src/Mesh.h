@@ -1,5 +1,10 @@
+#include <iostream>
+#include <sstream>
+#include <fstream>
 #include <vector>
 #include <OpenGl/gl.h>
+
+
 
 #ifndef GROUP_H
 #define GROUP_H
@@ -30,6 +35,8 @@
 #define FACE_H
 #include "Face.h"
 #endif
+
+
 
 class Mesh : public Group, public Updatable, public Drawable {
  private:
