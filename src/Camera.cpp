@@ -18,9 +18,9 @@ Camera::~Camera() {
 
 void Camera::update() {
 	Camera::time += 1;
-	frame->x  = 25.0*cos(time*0.01);
-	frame->y  = 5;
-	frame->z  = 25.0*sin(time*0.01);
+	frame->x  = 100.0*cos(time*0.01);
+	frame->y  = 30;
+	frame->z  = 100.0*sin(time*0.01);
 	follow->y = 0;
 }
 

@@ -62,7 +62,7 @@ void Game::initScene() {
 	//Create Object
 	Group* coordinate = new Group;
   Car* car = new Car;
-	Mesh* carBody = new Mesh("Car.obj");
+	Mesh* carBody = new Mesh("SmoothCar.obj");
 	//Add Objects to Scene
 	Game::sceneGraph->add(carBody);
 	coordinate->add(car);
