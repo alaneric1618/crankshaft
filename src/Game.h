@@ -23,6 +23,7 @@ class Game {
 	static void initScene();
 	static void initGlut(int argc, char** argv);
 	static void initGL();
+	static void initLoop();
 	static void keyboard(unsigned char key, int x, int y);
 	static void keyboardSpecial(int key, int x, int y);
 	static void reshape(int w, int h);

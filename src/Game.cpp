@@ -62,7 +62,7 @@ void Game::initScene() {
 	//Create Object
 	Group* coordinate = new Group;
   Car* car = new Car;
-	Mesh* carBody = new Mesh("SmoothCar.obj");
+	Mesh* carBody = new Mesh("media/Car.obj");
 	//Add Objects to Scene
 	Game::sceneGraph->add(carBody);
 	coordinate->add(car);
@@ -95,7 +95,14 @@ void Game::update() {
 // Primary draw loop from which all other drawing happens.
 void Game::draw(void) {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  //glPushMatrix();
+
+  glShadeModel(GL_SMOOTH);
+
+  GLfloat position[3] = {20, 30, 20};
+	glLightfv(GL_LIGHT0, GL_POSITION, &position[0]);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
 
 	switch (Game::gameState) {
 	case 0: //loading 
@@ -138,10 +145,13 @@ void Game::initGlut(int argc, char** argv) {
   glutInitWindowSize(1280,720);
   glutCreateWindow(argv[0]);
   Game::initGL();
-  glutDisplayFunc(Game::draw);
-  glutReshapeFunc(Game::reshape);
   glutKeyboardFunc(Game::keyboard);
   glutSpecialFunc(Game::keyboardSpecial);
+}
+
+void Game::initLoop() {
+	glutDisplayFunc(Game::draw);
+  glutReshapeFunc(Game::reshape);
   glutIdleFunc(Game::update);
   glutMainLoop();
 }
@@ -156,33 +166,11 @@ void Game::initGL() {
   glPointSize(3.0);
 }
 
-
-// TODO: readFile needs to be expanded to read all
-// data in a file. Normals should be added soon.
-void Game::readFile(int argc, char** argv) {
-  std::string line;
-  std::ifstream infile;
-  infile.open(argv[argc-1]);
-  while (std::getline(infile, line)) {
-    std::stringstream ss(line);
-    std::string word;
-    ss >> word;
-    if (word == "v") {
-      double x, y, z;
-      ss >> x >> y >> z;
-      //vertices.push_back( Point(x,y,z) );
-    } else if (word == "f") {
-      int one, two, three;
-      ss >> one >> two >> three;
-      //faces.push_back( Index(one-1, two-1, three-1) );
-    }
-  }
-}
-
 int main(int argc, char** argv)
 {
-	Game::initScene();
   Game::initGlut(argc, argv);
+	Game::initScene();
+	Game::initLoop();
   return 0;
 }
 
