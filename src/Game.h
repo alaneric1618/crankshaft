@@ -7,7 +7,10 @@
 #include "Mesh.h"
 #endif
 
+#ifndef CAR_H
+#define CAR_H
 #include "Car.h"
+#endif
 
 #ifndef GROUP_H
 #define GROUP_H

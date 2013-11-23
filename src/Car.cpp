@@ -1,4 +1,5 @@
 #include "Car.h"
+#include <cmath>
 
 Car::Car() {
 	this->add(body);
@@ -20,14 +21,45 @@ Car::Car() {
 	backRightWheel->frame->z = -28.5;
 }
 
+void Car::steer(double angle) {
+	if (abs(turnAmount) < 40) {
+		turnAmount += angle;
+	} else {
+		
+	}
+}
+
+void Car::gas(double pedal) {
+	
+}
+
+void Car::brake(double pedal) {
+	
+}
+
 void Car::update() {
-  for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
+	turnAmount /= 1.2;
+	double dist = turnAmount - frontLeftWheel->frame->rotationY;
+	frontLeftWheel->frame->rotationY += dist/16;
+	frontRightWheel->frame->rotationY+= dist/16;
+	if (frame->y > 0) {
+		Force* force = new Force(0.0, 0.0, 0.0, 0.0, -0.1, 0.0);
+		Vector* translation = force->getTranslationVector();
+		acceleration->y += translation->y;
+		frame->y += acceleration->y;
+	} else {
+		frame->y = 0;
+		acceleration->y = 0;
+	}
+	
+
+	for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->update();
   }
 }
 
 void Car::draw() {
-  
+	
   glPushMatrix();
   glScalef(frame->scaleX, frame->scaleY, frame->scaleZ);
   glTranslatef(frame->x, frame->y, frame->z);

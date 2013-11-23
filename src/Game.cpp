@@ -13,6 +13,11 @@
 #include <OpenGL/glu.h>
 #endif
 
+#ifndef FORCE_H
+#define FORCE_H
+#include "Force.h"
+#endif
+
 #include <GLUT/glut.h>
 #include <cstdlib>
 
@@ -21,11 +26,27 @@
 int Game::gameState = 0; //set game to loading state
 HUD* Game::hud = new HUD();
 Camera* Game::camera = new Camera();
-SceneGraph* Game::sceneGraph = new SceneGraph();	
+SceneGraph* Game::sceneGraph = new SceneGraph();
 
 void Game::keyboard (unsigned char key, int x, int y) {
+
   switch (key) {
-    //Camera Movement
+		
+	case ' ':
+		if (Game::gameState == 1) {
+			Game::gameState = 2;
+			break;
+		}
+		if (Game::gameState == 2) Game::gameState = 1;
+		break;
+
+	case 'a':
+		Game::sceneGraph->getCar()->steer(20.0);
+		break;
+
+	case 'd':
+		Game::sceneGraph->getCar()->steer(-20.0);
+		break;
   
   default: break;
   }
@@ -37,11 +58,11 @@ void Game::keyboardSpecial (int key, int x, int y) {
 	switch (key) {
 		//Camera Movement
 	case GLUT_KEY_UP: 
-		Game::gameState = 2;
+
 		break;
 
 	case GLUT_KEY_DOWN: 
-		Game::gameState = 1;
+
 		break;
 
 	case GLUT_KEY_LEFT:
@@ -62,13 +83,13 @@ void Game::initScene() {
 	//Create Objects
 	Group* coordinate = new Group;
 	Car* car = new Car();
-	car->frame->y = 20;
+	car->frame->y = 200;
 
 	Game::camera->setLook(car->frame);
 
 	//Add Objects to Scene
 	Game::sceneGraph->add(coordinate);
-	Game::sceneGraph->add(car);
+	Game::sceneGraph->addCar(car);
 
 	//set game to active state
 	Game::gameState = 1;
@@ -91,8 +112,6 @@ void Game::update() {
 	case 3: //error
 		break;
 	}
-
-  draw();
 }
 
 
@@ -128,6 +147,7 @@ void Game::draw(void) {
 
   glFlush();
   glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 void Game::reshape(int width, int height)
@@ -172,6 +192,26 @@ void Game::initGL() {
 
 int main(int argc, char** argv)
 {
+
+	std::cout << "test" << std::endl;
+
+	Force* force = new Force(1.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+	std::cout << "Rotation" << std::endl;
+	Vector* vector = force->getRotationVector();
+	std::cout << vector->x << " ";
+	std::cout << vector->y << " ";
+	std::cout << vector->z << std::endl;
+
+
+	std::cout << "Translation" << std::endl;
+	vector = force->getTranslationVector();
+	std::cout << vector->x << " ";
+	std::cout << vector->y << " ";
+	std::cout << vector->z << std::endl;
+
+
+
+	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl;
   Game::initGlut(argc, argv);
 	Game::initScene();
 	Game::initLoop();
