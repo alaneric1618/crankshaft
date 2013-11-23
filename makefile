@@ -54,7 +54,7 @@ obj/Material.o: src/Material.cpp src/Material.h
 obj/Group.o: src/Group.cpp src/Group.h src/Frame.h src/Updatable.h src/Drawable.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/Car.o: src/Car.cpp src/Car.h src/Group.h
+obj/Car.o: src/Car.cpp src/Car.h src/Group.h src/Mesh.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 obj/Updatable.o: src/Updatable.h

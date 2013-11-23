@@ -1,5 +1,4 @@
 #include <vector>
-
 #include <OpenGl/gl.h>
 
 #ifndef UPDATABLE_H
@@ -17,17 +16,15 @@
 #include "Frame.h"
 #endif
 
-
-
 class Group : public Updatable, public Drawable {	
-
-protected:
-  Frame* frame;
-  std::vector< Group* > children;
-public:
+ public:
   Group();
   virtual ~Group();
   virtual void update();
   virtual void draw();
   virtual void add(Group* group);
+
+  Frame* frame;
+  std::vector< Group* > children;
+
 };

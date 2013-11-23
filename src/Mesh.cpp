@@ -1,7 +1,6 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::string fileName) {
-
 	std::cout << "Reading Object File: " << fileName << std::endl;
 
 	std::string line;
@@ -27,8 +26,10 @@ Mesh::Mesh(std::string fileName) {
 
       double x, y;
       ss >> x >> y;
-      //textures.push_back( Point2D(x+0.33, 1-y) );
-      textures.push_back( Point2D(0.33*x, 1-0.33*y) );
+      textures.push_back( Point2D(
+																	(0.33 * x + 0), 
+																	(-0.33 * y + 1)) 
+													);
 
     } else if (word == "f") {
 			
@@ -63,6 +64,83 @@ Mesh::Mesh(std::string fileName) {
 			std::string fileName;
 			ss >> fileName;
 			Mesh::material = Material( fileName );
+
+		}
+
+
+  }
+
+
+}
+
+Mesh::Mesh(std::string fileName, 
+					 double offsetX, double offsetY,
+					 double scaleX, double scaleY
+					 ) {
+
+	std::cout << "Reading Object File: " << fileName << std::endl;
+
+	std::string line;
+  std::ifstream infile;
+  infile.open(fileName);
+  while (std::getline(infile, line)) {
+    std::stringstream ss(line);
+    std::string word;
+    ss >> word;
+    if (word == "v") {
+
+      double x, y, z;
+      ss >> x >> y >> z;
+      vertices.push_back( Point3D(x,y,z) );
+
+    } else if (word == "vn") {
+
+      double x, y, z;
+      ss >> x >> y >> z;
+      normals.push_back( Vector(x,y,z) );
+
+		} else if (word == "vt") {
+
+      double x, y;
+      ss >> x >> y;
+      textures.push_back( Point2D(
+																	(scaleX * x + offsetX), 
+																	(scaleY*y + offsetY)) 
+													);
+
+    } else if (word == "f") {
+			
+			int index[3];
+			int texture[3];
+			int normal[3];
+
+			std::string token;
+
+			for (int i = 0; i < 3; i++) {
+				std::getline(ss, token, '/');
+				index[i] = atoi(token.c_str());
+				token = "";
+
+				std::getline(ss, token, '/');
+				texture[i] = atoi(token.c_str());
+				token = "";
+
+				std::getline(ss, token, ' ');
+				normal[i] = atoi(token.c_str());
+				token = "";
+			}
+
+      faces.push_back( 
+											Face(  index[0]-1,   index[1]-1,   index[2]-1,
+													 texture[0]-1, texture[1]-1, texture[2]-1,
+														normal[0]-1,  normal[1]-1,  normal[2]-1)
+											 );
+
+    } else if (word == "mtllib") {
+
+			std::string fileName;
+			ss >> fileName;
+			material = Material( fileName );
 
 		}
 
@@ -116,6 +194,8 @@ void Mesh::draw() {
 		glNormal3f(normals[face.n3].x, normals[face.n3].y, normals[face.n3].z);
     glVertex3f(vertices[face.v3].x, vertices[face.v3].y, vertices[face.v3].z);
 	}
+
+	glEnd();
 
   for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->draw();

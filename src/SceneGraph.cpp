@@ -23,9 +23,7 @@ void SceneGraph::draw() {
 }
 
 void SceneGraph::add(Group* group) {
-  if (group != NULL) {
     children.push_back(group);
-  }
 }
 
 

@@ -5,10 +5,9 @@
 
 #include <cmath>
 
-double Camera::time = 0;
-
 Camera::Camera() {
-  Camera::frame = new Frame();
+	time = 0;
+  Camera::follow = new Frame();
 	Camera::follow = new Frame();
 }
 
@@ -17,24 +16,37 @@ Camera::~Camera() {
 }
 
 void Camera::update() {
-	Camera::time += 1;
-	frame->x  = 150.0*cos(time*0.01);
-	frame->y  = 30;
-	frame->z  = 150.0*sin(time*0.01);
-	follow->y = 0;
+	time = -1.4;
+	double distX = 150.0*cos(-(look->rotationY/57.2957)-3.1415/2) - follow->x;
+	double distZ = 150.0*sin(-(look->rotationY/57.2957)-3.1415/2) - follow->z;
+	follow->x  += distX/32;
+	follow->y  = 20;
+	follow->z  += distZ/32;
+
+}
+
+void Camera::pause() {
+	time += 0.005;
+	follow->x += (150.0*cos(time)-follow->x)/64;
+	follow->y = 20;
+	follow->z += (150.0*sin(time)-follow->z)/64;
 }
 
 void Camera::draw() {
 	glLoadIdentity();
   gluLookAt(
-	    frame->x,   frame->y, frame->z,     //Eye
-	    follow->x,   follow->y, follow->z,     //LookAt
+	    follow->x,   follow->y, follow->z,     //Eye
+	    look->x,   look->y+30, look->z,     //LookAt
 	    0.0,   1.0,   0.0     //Up vector
 	    );  
 }
 
 void Camera::setFollow(Frame* newFollow) {
 	follow = newFollow;
+}
+
+void Camera::setLook(Frame* newLook) {
+	look = newLook;
 }
 
 

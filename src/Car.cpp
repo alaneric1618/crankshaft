@@ -1,7 +1,26 @@
 #include "Car.h"
 
+Car::Car() {
+	this->add(body);
+	this->add(frontLeftWheel);
+	this->add(frontRightWheel);
+	this->add(backLeftWheel);
+	this->add(backRightWheel);
+	frontLeftWheel->frame->x = -18;
+	frontRightWheel->frame->x = 18;
+	backLeftWheel->frame->x = -18;
+	backRightWheel->frame->x = 18;
+	frontLeftWheel->frame->y = 2.5;
+	frontRightWheel->frame->y = 2.5;
+	backLeftWheel->frame->y = 4;
+	backRightWheel->frame->y = 4;
+	frontLeftWheel->frame->z =  33.5;
+	frontRightWheel->frame->z = 33.5;
+	backLeftWheel->frame->z = -28.5;
+	backRightWheel->frame->z = -28.5;
+}
+
 void Car::update() {
-  frame->rotationZ -= 0.2;
   for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->update();
   }
@@ -10,7 +29,6 @@ void Car::update() {
 void Car::draw() {
   
   glPushMatrix();
-
   glScalef(frame->scaleX, frame->scaleY, frame->scaleZ);
   glTranslatef(frame->x, frame->y, frame->z);
   glRotatef(frame->rotationX, -1.0, 0.0, 0.0);
@@ -41,6 +59,10 @@ void Car::draw() {
   }
   
   glEnd();
+
+  for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
+    children[i]->draw();
+  }
 
   glPopMatrix();
 }

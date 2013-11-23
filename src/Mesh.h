@@ -55,8 +55,8 @@ class Mesh : public Group, public Updatable, public Drawable {
 
  public:
 	Mesh(std::string fileName);
+	Mesh(std::string fileName, double offsetX, double offsetY, double scaleX, double scaleY);
 	virtual void draw();
 	virtual void update();
-	
 
 };

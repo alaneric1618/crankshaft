@@ -1,7 +1,12 @@
 #include "HUD.h"
 #include "Camera.h"
 #include "SceneGraph.h"
+
+#ifndef MESH_H
+#define MESH_H
 #include "Mesh.h"
+#endif
+
 #include "Car.h"
 
 #ifndef GROUP_H

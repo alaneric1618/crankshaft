@@ -59,14 +59,17 @@ void Game::keyboardSpecial (int key, int x, int y) {
 
 
 void Game::initScene() {
-	//Create Object
+	//Create Objects
 	Group* coordinate = new Group;
-  Car* car = new Car;
-	Mesh* carBody = new Mesh("media/Car.obj");
+	Car* car = new Car();
+	car->frame->y = 20;
+
+	Game::camera->setLook(car->frame);
+
 	//Add Objects to Scene
-	Game::sceneGraph->add(carBody);
-	coordinate->add(car);
-	Game::sceneGraph->add( coordinate );
+	Game::sceneGraph->add(coordinate);
+	Game::sceneGraph->add(car);
+
 	//set game to active state
 	Game::gameState = 1;
 }
@@ -83,6 +86,7 @@ void Game::update() {
 		Game::sceneGraph->update();
 		break;
 	case 2: //paused
+		Game::camera->pause();
 		break;
 	case 3: //error
 		break;
@@ -113,7 +117,7 @@ void Game::draw(void) {
 		break;
 	case 2: //paused
 		Game::hud->drawPaused();
-
+		Game::camera->draw();
 		Game::sceneGraph->draw();
 		break;
 	case 3: //error

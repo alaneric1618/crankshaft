@@ -16,10 +16,20 @@
 #include "Group.h"
 #endif
  
-
+#ifndef MESH_H
+#define MESH_H
+#include "Mesh.h"
+#endif
+ 
 class Car : public Group, public Updatable, public Drawable {	
-
  public:
+	Mesh* body            = new Mesh("media/Car.obj");
+	Mesh* frontLeftWheel  = new Mesh("media/Wheel.obj");
+	Mesh* frontRightWheel = new Mesh("media/Wheel.obj");
+	Mesh* backLeftWheel   = new Mesh("media/Wheel.obj");
+	Mesh* backRightWheel  = new Mesh("media/Wheel.obj");
+
+	Car();
 	virtual void update();
 	virtual void draw();
 
