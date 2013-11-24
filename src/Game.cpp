@@ -47,6 +47,15 @@ void Game::keyboard (unsigned char key, int x, int y) {
 	case 'd':
 		Game::sceneGraph->getCar()->steer(-20.0);
 		break;
+
+	case 'w':
+		Game::sceneGraph->getCar()->velocity->z += 0.3;
+		break;
+
+	case 's':
+		Game::sceneGraph->getCar()->velocity->z -= 0.3;
+		break;
+
   
   default: break;
   }
@@ -81,14 +90,21 @@ void Game::keyboardSpecial (int key, int x, int y) {
 
 void Game::initScene() {
 	//Create Objects
-	Group* coordinate = new Group;
 	Car* car = new Car();
-	car->frame->y = 200;
+	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 10.0, 10.0);
+	Mesh* sky = new Mesh("media/Sky.obj", 0.0, 1.0, 0.33, -0.33);
 
+	//Move Object
+	car->frame->y = 200;
+	floor->frame->y = -6.0;
+
+	//Setup Objects
 	Game::camera->setLook(car->frame);
 
+
 	//Add Objects to Scene
-	Game::sceneGraph->add(coordinate);
+  Game::sceneGraph->add(sky);
+	Game::sceneGraph->add(floor);
 	Game::sceneGraph->addCar(car);
 
 	//set game to active state
@@ -156,7 +172,7 @@ void Game::reshape(int width, int height)
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   
-  gluPerspective(37.8, ((double)width/(double)height), 1, 1000);
+  gluPerspective(37.8, ((double)width/(double)height), 1, 10000);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -192,26 +208,6 @@ void Game::initGL() {
 
 int main(int argc, char** argv)
 {
-
-	std::cout << "test" << std::endl;
-
-	Force* force = new Force(1.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-	std::cout << "Rotation" << std::endl;
-	Vector* vector = force->getRotationVector();
-	std::cout << vector->x << " ";
-	std::cout << vector->y << " ";
-	std::cout << vector->z << std::endl;
-
-
-	std::cout << "Translation" << std::endl;
-	vector = force->getTranslationVector();
-	std::cout << vector->x << " ";
-	std::cout << vector->y << " ";
-	std::cout << vector->z << std::endl;
-
-
-
-	std::cout << std::endl << std::endl << std::endl << std::endl << std::endl;
   Game::initGlut(argc, argv);
 	Game::initScene();
 	Game::initLoop();

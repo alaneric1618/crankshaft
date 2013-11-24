@@ -1,7 +1,6 @@
 #include "Mesh.h"
 
 Mesh::Mesh(std::string fileName) {
-	std::cout << "Reading Object File: " << fileName << std::endl;
 
 	std::string line;
   std::ifstream infile;
@@ -77,8 +76,6 @@ Mesh::Mesh(std::string fileName,
 					 double offsetX, double offsetY,
 					 double scaleX, double scaleY
 					 ) {
-
-	std::cout << "Reading Object File: " << fileName << std::endl;
 
 	std::string line;
   std::ifstream infile;

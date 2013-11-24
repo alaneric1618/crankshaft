@@ -18,13 +18,13 @@
 
 class Group : public Updatable, public Drawable {	
  public:
+  Frame* frame;
+  std::vector< Group* > children;
+
   Group();
   virtual ~Group();
   virtual void update();
   virtual void draw();
   virtual void add(Group* group);
-
-  Frame* frame;
-  std::vector< Group* > children;
 
 };

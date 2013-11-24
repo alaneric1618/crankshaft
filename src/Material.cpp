@@ -33,8 +33,6 @@ Material::Material(std::string fileName) {
 	shininess = 0.0;
 	diffuseTexture = 0;
 	specularTexture = 0;
-
-	std::cout << "Reading Material File: " << fileName << std::endl;
 	
 	std::string line;
   std::ifstream infile;
@@ -45,40 +43,32 @@ Material::Material(std::string fileName) {
     ss >> word;
     if (word == "Kd") {
 
-			std::cout << "Kd ";
       GLfloat r, g, b;
       ss >> r >> g >> b;
-			std::cout << r << " " << g << " " << b << std::endl;
 			diffuse[0] = r;
 			diffuse[1] = g;
 			diffuse[2] = b;
 
     } else if (word == "Ka") {
 
-			std::cout << "Ka ";
       GLfloat r, g, b;
       ss >> r >> g >> b;
-			std::cout << r << " " << g << " " << b << std::endl;
 			ambient[0] = r;
 			ambient[1] = g;
 			ambient[2] = b;
 
     } else if (word == "Ks") {
 
-			std::cout << "Ks ";
       GLfloat r, g, b;
       ss >> r >> g >> b;
-			std::cout << r << " " << g << " " << b << std::endl;
 			specular[0] = r;
 			specular[1] = g;
 			specular[2] = b;
 
 		} else if (word == "Ni") {
 
-			std::cout << "Ni ";			
       GLfloat value;
       ss >> value;
-			std::cout << value << std::endl;
 			shininess = value;
 
 		} else if (word == "map_Kd") {

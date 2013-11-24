@@ -42,21 +42,64 @@ void Car::update() {
 	double dist = turnAmount - frontLeftWheel->frame->rotationY;
 	frontLeftWheel->frame->rotationY += dist/16;
 	frontRightWheel->frame->rotationY+= dist/16;
-	if (frame->y > 0) {
-		Force* force = new Force(0.0, 0.0, 0.0, 0.0, -0.1, 0.0);
-		Vector* translation = force->getTranslationVector();
-		acceleration->y += translation->y;
-		frame->y += acceleration->y;
-	} else {
-		frame->y = 0;
-		acceleration->y = 0;
-	}
-	
 
+	evalPhysics();
 	for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->update();
   }
 }
+
+void Car::evalPhysics() {
+	forces.push_back(new Force(0.0, 0.0, 0.0, 0.0, -0.1, 0.0)); //Gravity
+	
+	//reset acceleration
+	acceleration->x = 0.0;
+	acceleration->y = 0.0;
+	acceleration->z = 0.0;
+	acceleration->rotationX = 0.0;
+	acceleration->rotationY = 0.0;
+	acceleration->rotationZ = 0.0;
+
+	//add forces to acceleration
+	for(std::vector<Force>::size_type i = 0; i != forces.size(); i++) {
+			Force* force = forces[i];
+			Vector* rotation = force->getRotationVector();
+			Vector* translation = force->getRotationVector();
+			//			std::cout << translation->y << std::endl;
+			acceleration->x += translation->x;
+			//acceleration->y += translation->y;
+			if (frame->y > 0) {
+				acceleration->y += -0.01;
+			} else {
+				velocity->y = 0;
+			}
+			acceleration->z += translation->z;
+			acceleration->rotationX += rotation->x;
+			acceleration->rotationY += rotation->y;
+			acceleration->rotationZ += rotation->z;
+  }
+
+	//add acceleration to velocity
+	velocity->x += acceleration->x;
+	velocity->y += acceleration->y;
+	velocity->z += acceleration->z;
+	velocity->rotationX += acceleration->rotationX;
+	velocity->rotationY += acceleration->rotationY;
+	velocity->rotationZ += acceleration->rotationZ;
+
+	//add velocity to frame
+	frame->x += velocity->x;
+	frame->y += velocity->y;
+	frame->z += velocity->z;
+	frame->rotationX += velocity->rotationX;
+	frame->rotationY += velocity->rotationY;
+	frame->rotationZ += velocity->rotationZ;
+
+	//slow velocity
+
+}
+
+
 
 void Car::draw() {
 	

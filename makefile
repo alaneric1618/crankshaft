@@ -11,7 +11,7 @@ LIBRARIES  = -lGL -lGLU -lm -ltcl
 FRAMEWORKS = -framework GLUT -framework OpenGL
 CFLAGS     = -Wall -Wno-deprecated -c -frounding-math
 LFLAGS     = -Wall $(FRAMEWORKS) $(LIBPATH) $(LIBRARIES)
-OBJS       = obj/Game.o obj/SceneGraph.o obj/HUD.o obj/Updatable.o obj/Drawable.o obj/Group.o obj/Car.o obj/Frame.o obj/Camera.o obj/Point2D.o obj/Point3D.o obj/Face.o obj/Vector.o obj/Mesh.o obj/Material.o obj/Force.o
+OBJS       = obj/Game.o obj/SceneGraph.o obj/HUD.o obj/Updatable.o obj/Drawable.o obj/Group.o obj/Car.o obj/Frame.o obj/Camera.o obj/Point2D.o obj/Point3D.o obj/Face.o obj/Vector.o obj/Mesh.o obj/Material.o obj/Force.o obj/Dynamic.o
 
 all: $(TARGET)
 
@@ -54,7 +54,13 @@ obj/Material.o: src/Material.cpp src/Material.h
 obj/Group.o: src/Group.cpp src/Group.h src/Frame.h src/Updatable.h src/Drawable.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/Car.o: src/Car.cpp src/Car.h src/Group.h src/Mesh.h
+obj/Car.o: src/Car.cpp src/Car.h src/Group.h src/Mesh.h src/Dynamic.h src/Updatable.h src/Drawable.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+obj/Force.o: src/Force.cpp src/Force.h src/Point3D.h src/Vector.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+obj/Dynamic.o: src/Dynamic.cpp src/Dynamic.h src/Force.h src/Frame.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 obj/Updatable.o: src/Updatable.h
@@ -63,8 +69,6 @@ obj/Updatable.o: src/Updatable.h
 obj/Drawable.o: src/Drawable.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/Force.o: src/Force.cpp src/Force.h src/Point3D.h src/Vector.h
-	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
 	rm -f obj/*

@@ -1,6 +1,11 @@
 #include <vector>
 #include <OpenGl/gl.h>
 
+#ifndef DYNAMIC_H
+#define DYNAMIC_H
+#include "Dynamic.h"
+#endif
+
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
 #include "Updatable.h"
@@ -26,9 +31,8 @@
 #include "Mesh.h"
 #endif
 
-class Car : public Group, public Updatable, public Drawable {	
+class Car : public Group, public Dynamic, public Updatable, public Drawable {	
  public:
-	Frame* acceleration = new Frame();
 	Mesh* body            = new Mesh("media/Car.obj");
 	Mesh* frontLeftWheel  = new Mesh("media/Wheel.obj");
 	Mesh* frontRightWheel = new Mesh("media/Wheel.obj");
@@ -45,5 +49,5 @@ class Car : public Group, public Updatable, public Drawable {
 	void brake(double pedal);
 	virtual void update();
 	virtual void draw();
-	
+	virtual void evalPhysics();
 };

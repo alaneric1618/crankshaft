@@ -20,16 +20,16 @@ void Camera::update() {
 	double distX = 150.0*cos(-(look->rotationY/57.2957)-3.1415/2) - follow->x;
 	double distZ = 150.0*sin(-(look->rotationY/57.2957)-3.1415/2) - follow->z;
 	follow->x  += distX/32;
-	follow->y  = 80;
+	follow->y  = 60;
 	follow->z  += distZ/32;
 
 }
 
 void Camera::pause() {
 	time += 0.005;
-	follow->x += (150.0*cos(time)-follow->x)/64;
-	follow->y = 80;
-	follow->z += (150.0*sin(time)-follow->z)/64;
+	follow->x += (150.0*cos(time) - follow->x)/64;
+	follow->y = 60;
+	follow->z += (150.0*sin(time) - follow->z)/64;
 }
 
 void Camera::draw() {
