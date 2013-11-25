@@ -17,19 +17,24 @@ Camera::~Camera() {
 
 void Camera::update() {
 	time = -1.4;
-	double distX = 150.0*cos(-(look->rotationY/57.2957)-3.1415/2) - follow->x;
-	double distZ = 150.0*sin(-(look->rotationY/57.2957)-3.1415/2) - follow->z;
+	double distX = 
+		look->x
+		+ 150.0*cos(-(look->rotationY/57.2957)-3.1415/2) 
+		- follow->x;
+	double distZ = 
+		look->z
+		+ 150.0*sin(-(look->rotationY/57.2957)-3.1415/2) 
+		- follow->z;
 	follow->x  += distX/32;
 	follow->y  = 60;
 	follow->z  += distZ/32;
-
 }
 
 void Camera::pause() {
 	time += 0.005;
-	follow->x += (150.0*cos(time) - follow->x)/64;
-	follow->y = 60;
-	follow->z += (150.0*sin(time) - follow->z)/64;
+	follow->x += (look->x + 150.0*cos(time) - follow->x)/64;
+	follow->y = 0;
+	follow->z += (look->z + 150.0*sin(time) - follow->z)/64;
 }
 
 void Camera::draw() {

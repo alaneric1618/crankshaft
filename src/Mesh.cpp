@@ -26,8 +26,8 @@ Mesh::Mesh(std::string fileName) {
       double x, y;
       ss >> x >> y;
       textures.push_back( Point2D(
-																	(0.33 * x + 0), 
-																	(-0.33 * y + 1)) 
+																	(1.0 * x + 0), 
+																	(-1.0 * y + 0)) 
 													);
 
     } else if (word == "f") {
@@ -166,15 +166,6 @@ void Mesh::draw() {
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	glBindTexture( GL_TEXTURE_2D, material.diffuseTexture );  
-	//glBindTexture( GL_TEXTURE_2D, material.specularTexture );  
-	//glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
-
-  //glColor3f(0,0,1);
-
-  //glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,   &Mesh::material.ambient[0]);
-  //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,   &Mesh::material.diffuse[0]);
-  //glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,  &Mesh::material.specular[0]);
-  //glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS,  Mesh::material.shininess);
 
 	glBegin(GL_TRIANGLES);
 	for(std::vector<Face>::iterator it = faces.begin(); it != faces.end(); ++it) {

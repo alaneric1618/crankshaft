@@ -49,11 +49,11 @@ void Game::keyboard (unsigned char key, int x, int y) {
 		break;
 
 	case 'w':
-		Game::sceneGraph->getCar()->velocity->z += 0.3;
+		Game::sceneGraph->getCar()->gas();
 		break;
 
 	case 's':
-		Game::sceneGraph->getCar()->velocity->z -= 0.3;
+		Game::sceneGraph->getCar()->brake();
 		break;
 
   
@@ -91,12 +91,18 @@ void Game::keyboardSpecial (int key, int x, int y) {
 void Game::initScene() {
 	//Create Objects
 	Car* car = new Car();
-	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 10.0, 10.0);
-	Mesh* sky = new Mesh("media/Sky.obj", 0.0, 1.0, 0.33, -0.33);
+	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 100.0, 100.0);
+	Mesh* sky = new Mesh("media/Sky.obj", 0.0, 1.0, 1.0, -1.0);
 
 	//Move Object
-	car->frame->y = 200;
-	floor->frame->y = -6.0;
+	car->frame->y = 280;
+	floor->frame->y = 4.4;
+	sky->frame->scaleX = 3;
+	sky->frame->scaleY = 3;
+	sky->frame->scaleZ = 3;
+	floor->frame->scaleX = 4;
+	floor->frame->scaleY = 4;
+	floor->frame->scaleZ = 4;
 
 	//Setup Objects
 	Game::camera->setLook(car->frame);

@@ -34,20 +34,23 @@
 class Car : public Group, public Dynamic, public Updatable, public Drawable {	
  public:
 	Mesh* body            = new Mesh("media/Car.obj");
+	Group* frontLeftWell  = new Group();
+	Group* frontRightWell  = new Group();
 	Mesh* frontLeftWheel  = new Mesh("media/Wheel.obj");
 	Mesh* frontRightWheel = new Mesh("media/Wheel.obj");
 	Mesh* backLeftWheel   = new Mesh("media/Wheel.obj");
 	Mesh* backRightWheel  = new Mesh("media/Wheel.obj");
 	double turnAmount = 0.0;
-	double gasAmount = 0.0;
-	double brakeAmount = 0.0;
-
+	double bobAmount = 0.0;
+	double swayAmount = 0.0;
+	double RPM = 0;
 
 	Car();
 	void steer(double angle);
-	void gas(double pedal);
-	void brake(double pedal);
+	void gas();
+	void brake();
 	virtual void update();
 	virtual void draw();
 	virtual void evalPhysics();
+	virtual void collisionDetect();
 };
