@@ -91,22 +91,21 @@ void Game::keyboardSpecial (int key, int x, int y) {
 void Game::initScene() {
 	//Create Objects
 	Car* car = new Car();
-	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 100.0, 100.0);
+	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 300.0, 300.0);
 	Mesh* sky = new Mesh("media/Sky.obj", 0.0, 1.0, 1.0, -1.0);
 
 	//Move Object
 	car->frame->y = 280;
-	floor->frame->y = 4.4;
-	sky->frame->scaleX = 3;
-	sky->frame->scaleY = 3;
-	sky->frame->scaleZ = 3;
-	floor->frame->scaleX = 4;
-	floor->frame->scaleY = 4;
-	floor->frame->scaleZ = 4;
+	floor->frame->y = 5.0;
+	sky->frame->scaleX = 10;
+	sky->frame->scaleY = 10;
+	sky->frame->scaleZ = 10;
+	floor->frame->scaleX = 10;
+	floor->frame->scaleY = 10;
+	floor->frame->scaleZ = 10;
 
 	//Setup Objects
 	Game::camera->setLook(car->frame);
-
 
 	//Add Objects to Scene
   Game::sceneGraph->add(sky);
@@ -153,6 +152,7 @@ void Game::draw(void) {
 	case 0: //loading 
 		break;
 	case 1: //active
+		Game::hud->drawHUD();
 		Game::camera->draw();
 		Game::sceneGraph->draw();
 		break;
@@ -178,7 +178,7 @@ void Game::reshape(int width, int height)
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   
-  gluPerspective(37.8, ((double)width/(double)height), 1, 10000);
+  gluPerspective(37.8, ((double)width/(double)height), 1, 100000);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();

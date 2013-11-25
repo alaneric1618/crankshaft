@@ -34,8 +34,8 @@ Car::Car() {
 
 void Car::steer(double angle) {
 	double velocityMagnitude = sqrt(pow(velocity->z,2)+pow(velocity->x,2));
-	forces.push_back(new Force(0.0, 0.0, 10.0, angle*4,  0.0, 0.0));
-	forces.push_back(new Force(0.0, 0.0,  0.0, -angle*4, 0.0, 0.0));
+	forces.push_back(new Force(0.0, 0.0, 10.0, angle*velocityMagnitude,  0.0, 0.0));
+	forces.push_back(new Force(0.0, 0.0,  0.0, -angle*velocityMagnitude, 0.0, 0.0));
 	turnAmount = 16*angle;
 	swayAmount = angle*velocityMagnitude/25;
 	

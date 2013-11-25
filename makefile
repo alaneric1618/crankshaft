@@ -27,7 +27,7 @@ obj/SceneGraph.o: src/SceneGraph.cpp src/SceneGraph.h src/Updatable.h src/Drawab
 obj/Camera.o: src/Camera.cpp src/Camera.h src/Updatable.h src/Drawable.h
 	$(CC) $(CFLAGS) -o $@ $<
 
-obj/HUD.o: src/HUD.cpp src/HUD.h src/Updatable.h src/Drawable.h
+obj/HUD.o: src/HUD.cpp src/HUD.h src/Updatable.h src/Drawable.h src/Frame.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 obj/Point2D.o: src/Point2D.cpp src/Point2D.h
