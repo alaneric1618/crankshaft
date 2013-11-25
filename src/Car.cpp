@@ -34,20 +34,23 @@ Car::Car() {
 
 void Car::steer(double angle) {
 	double velocityMagnitude = sqrt(pow(velocity->z,2)+pow(velocity->x,2));
-	forces.push_back(new Force(0.0, 0.0, 10.0, angle*velocityMagnitude,  0.0, 0.0));
-	forces.push_back(new Force(0.0, 0.0,  0.0, -angle*velocityMagnitude, 0.0, 0.0));
+	double sign = 0;
 	turnAmount = 16*angle;
 	swayAmount = angle*velocityMagnitude/25;
+	double k = 0.22;
+	double multiplier = (RPM)/(30*k*pow(2.17,RPM*k)); //Modeled after chi squared
+	forces.push_back(new Force(0.0, 0.0, 10.0,  (turnAmount*multiplier),  0.0, 0.0));
+	forces.push_back(new Force(0.0, 0.0,  0.0, -(turnAmount*multiplier), 0.0, 0.0));
 	
 }
 
 void Car::gas() {
-	RPM += 0.1;
-	bobAmount = 3.0;
+	RPM += 0.18;
+	bobAmount = 5.0;
 }
 
 void Car::brake() {
-	double pedal = 0.14;
+	double pedal = 0.3;
 	RPM -= pedal;
 	velocity->rotationX /= 1.01;
 	velocity->rotationY /= 1.01;
@@ -65,16 +68,16 @@ void Car::update() {
 	frontRightWheel->frame->rotationX -= RPM*3.2;
 	backLeftWheel->frame->rotationX   -= RPM*3.3;
 	backRightWheel->frame->rotationX  -= RPM*3.3;
-	swayAmount /= 1.01;
+	swayAmount /= 1.12;
 	dist = swayAmount - body->frame->rotationZ;
 	body->frame->rotationZ += dist/16;
 	
 
 	//Engin
 	RPM -= 0.003;
-	bobAmount /= 1.01;
+	bobAmount /= 1.12;
 	if (RPM < 0) RPM = 0;
-	if (RPM > 10) RPM = 10;
+	if (RPM > 14) RPM = 14;
 	dist = bobAmount - body->frame->rotationX;
 	body->frame->rotationX += dist/16;
 

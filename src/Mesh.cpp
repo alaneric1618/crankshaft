@@ -162,10 +162,15 @@ void Mesh::draw() {
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  
 	
+	if (material.diffuseTexture > 0) {
+		glEnable(GL_TEXTURE_2D);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+		glBindTexture( GL_TEXTURE_2D, material.diffuseTexture );  
+	} else {
+		glDisable(GL_TEXTURE_2D);
+		glColor3fv(&material.diffuse[0]);
+	}
 
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glBindTexture( GL_TEXTURE_2D, material.diffuseTexture );  
 
 	glBegin(GL_TRIANGLES);
 	for(std::vector<Face>::iterator it = faces.begin(); it != faces.end(); ++it) {

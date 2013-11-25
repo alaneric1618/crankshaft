@@ -85,7 +85,7 @@ Material::Material(std::string fileName) {
 			fileName = "media/"+fileName;
 			specularTexture = createTexture(fileName.c_str());			
 
-		} 
+		}
 
 	}
 

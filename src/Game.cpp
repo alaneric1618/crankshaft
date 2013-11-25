@@ -92,7 +92,8 @@ void Game::initScene() {
 	//Create Objects
 	Car* car = new Car();
 	Mesh* floor = new Mesh("media/Floor.obj", 0.0, 0.0, 300.0, 300.0);
-	Mesh* sky = new Mesh("media/Sky.obj", 0.0, 1.0, 1.0, -1.0);
+	Mesh* sky = new Mesh("media/Sky.obj");
+	Mesh* tower = new Mesh("media/Tower.obj");
 
 	//Move Object
 	car->frame->y = 280;
@@ -103,11 +104,15 @@ void Game::initScene() {
 	floor->frame->scaleX = 10;
 	floor->frame->scaleY = 10;
 	floor->frame->scaleZ = 10;
+	tower->frame->y = -5;
+	tower->frame->z = 5000;
+	tower->frame->x = 500;
 
 	//Setup Objects
 	Game::camera->setLook(car->frame);
 
 	//Add Objects to Scene
+	Game::sceneGraph->add(tower);
   Game::sceneGraph->add(sky);
 	Game::sceneGraph->add(floor);
 	Game::sceneGraph->addCar(car);
