@@ -29,13 +29,6 @@ void Group::draw() {
   glRotatef(frame->rotationX, -1.0, 0.0, 0.0);
   glRotatef(frame->rotationY, 0.0, 1.0, 0.0);
   glRotatef(frame->rotationZ, 0.0, 0.0, 1.0);
-  
-	glDisable(GL_LIGHTING);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(0.9, 0.5, 0.5);
-	glBegin(GL_TRIANGLES);
-	glEnd();
-
 
   for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->draw();

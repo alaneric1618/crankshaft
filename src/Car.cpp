@@ -29,6 +29,8 @@ Car::Car() {
 	backRightWheel->frame->scaleX = 1.1;
 	backRightWheel->frame->scaleY = 1.1;
 	backRightWheel->frame->scaleZ = 1.1;
+	frontLeftWell->frame->rotationY = 180;
+	backRightWheel->frame->rotationY = 180;
 	mass = 40.0;
 }
 
@@ -40,8 +42,7 @@ void Car::steer(double angle) {
 	double k = 0.22;
 	double multiplier = (RPM)/(30*k*pow(2.17,RPM*k)); //Modeled after chi squared
 	forces.push_back(new Force(0.0, 0.0, 10.0,  (turnAmount*multiplier),  0.0, 0.0));
-	forces.push_back(new Force(0.0, 0.0,  0.0, -(turnAmount*multiplier), 0.0, 0.0));
-	
+	forces.push_back(new Force(0.0, 0.0,  0.0, -(turnAmount*multiplier), 0.0, 0.0));	
 }
 
 void Car::gas() {
@@ -56,6 +57,7 @@ void Car::brake() {
 	velocity->rotationY /= 1.01;
 	velocity->rotationZ /= 1.01;
 	bobAmount = -1.0;
+	brakeLight = 2000;
 }
 
 void Car::update() {
@@ -65,7 +67,7 @@ void Car::update() {
 	frontLeftWell->frame->rotationY += dist/16;
 	frontRightWell->frame->rotationY+= dist/16;
 	frontLeftWheel->frame->rotationX  -= RPM*3.2;
-	frontRightWheel->frame->rotationX -= RPM*3.2;
+	frontRightWheel->frame->rotationX += RPM*3.2;
 	backLeftWheel->frame->rotationX   -= RPM*3.3;
 	backRightWheel->frame->rotationX  -= RPM*3.3;
 	swayAmount /= 1.12;
@@ -80,7 +82,11 @@ void Car::update() {
 	if (RPM > 14) RPM = 14;
 	dist = bobAmount - body->frame->rotationX;
 	body->frame->rotationX += dist/16;
-
+	if (brakeLight > 75) {
+		brakeLight /= 2;
+	} else {
+		brakeLight = 75;
+	}
 
 	//general physics
 	collisionDetect();
@@ -166,13 +172,48 @@ void Car::draw() {
   glRotatef(frame->rotationY, 0.0, 1.0, 0.0);
   glRotatef(frame->rotationZ, 0.0, 0.0, 1.0);
 
+	glEnable(GL_LIGHT2);
+	GLfloat position2[4] = {-12.0, 15, -20.0, 1.0};
+	GLfloat diffuse2[3] =  {brakeLight, 0.5, 0.5};
+	GLfloat specular2[3] = {0.1, 0.0, 0.0};
+	GLfloat ambient2[3] =  {0.0, 0.0, 0.0};
+	glLightfv(GL_LIGHT2, GL_POSITION, &position2[0]);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE,  &diffuse2[0]);
+	glLightfv(GL_LIGHT2, GL_SPECULAR,  &specular2[0]);
+	glLightfv(GL_LIGHT2, GL_AMBIENT,  &ambient2[0]);
+	glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1);
+	glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 1);
+	glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 1);
 
-  glDisable(GL_LIGHTING);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glColor3f(0.9, 0.2, 0.2);
-  glBegin(GL_TRIANGLES);
-  
-  glEnd();
+	glEnable(GL_LIGHT3);
+	GLfloat position3[4] = {12.0, 15, -20.0, 1.0};
+	GLfloat diffuse3[3] =  {brakeLight, 0.5, 0.5};
+	GLfloat specular3[3] = {0.1, 0.0, 0.0};
+	GLfloat ambient3[3] =  {0.0, 0.0, 0.0};
+	glLightfv(GL_LIGHT3, GL_POSITION, &position3[0]);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE,  &diffuse3[0]);
+	glLightfv(GL_LIGHT3, GL_SPECULAR,  &specular3[0]);
+	glLightfv(GL_LIGHT3, GL_AMBIENT,  &ambient3[0]);
+	glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 1);
+	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 1);
+	glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 1);
+
+	//glEnable(GL_LIGHT4);
+	GLfloat position4[4] = {0.0, 20, 1500.0, 1.0};
+	GLfloat direction[4] = {0.0, 0, 0.0};
+	GLfloat diffuse4[3] =  {200, 200, 50};
+	GLfloat specular4[3] = {0.0, 0.0, 0.0};
+	GLfloat ambient4[3] =  {0.0, 0.0, 0.0};
+	glLightfv(GL_LIGHT4, GL_POSITION, &position4[0]);
+	glLightfv(GL_LIGHT4, GL_DIFFUSE,  &diffuse4[0]);
+	glLightfv(GL_LIGHT4, GL_SPECULAR,  &specular4[0]);
+	glLightfv(GL_LIGHT4, GL_AMBIENT,  &ambient4[0]);
+	glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 3);
+	glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0);
+	glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0);
+
+
+
 
   for(std::vector<Group>::size_type i = 0; i != children.size(); i++) {
     children[i]->draw();

@@ -104,9 +104,10 @@ void Game::initScene() {
 	floor->frame->scaleX = 10;
 	floor->frame->scaleY = 10;
 	floor->frame->scaleZ = 10;
-	tower->frame->y = -5;
-	tower->frame->z = 5000;
-	tower->frame->x = 500;
+	tower->frame->y = -25;
+	tower->frame->z = 3500;
+	tower->frame->x = 400;
+	tower->frame->rotationY = 150;
 
 	//Setup Objects
 	Game::camera->setLook(car->frame);
@@ -147,30 +148,63 @@ void Game::draw(void) {
 
   glShadeModel(GL_SMOOTH);
 
-  GLfloat position[3] = {20, 30, 20};
-	glLightfv(GL_LIGHT0, GL_POSITION, &position[0]);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
-
-	switch (Game::gameState) {
+	switch (Game::gameState) { //Camera first to use lights
 	case 0: //loading 
 		break;
 	case 1: //active
-		Game::hud->drawHUD();
 		Game::camera->draw();
-		Game::sceneGraph->draw();
 		break;
 	case 2: //paused
-		Game::hud->drawPaused();
 		Game::camera->draw();
-		Game::sceneGraph->draw();
 		break;
 	case 3: //error
 		break;
 	}
 
 
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	//GLfloat position[4] = {-camera->follow->x, camera->follow->y, -camera->follow->z, 1.0};
+	GLfloat position0[4] = {0.0, 100.0, 0.0, 1.0};
+	GLfloat diffuse0[3] =  {0.0, 0.0, 0.0};
+	GLfloat specular0[3] = {0.0, 0.0, 0.0};
+	GLfloat ambient0[3] =  {0.2, 0.2, 0.3};
+	glLightfv(GL_LIGHT0, GL_POSITION, &position0[0]);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE,  &diffuse0[0]);
+	glLightfv(GL_LIGHT0, GL_SPECULAR,  &specular0[0]);
+	glLightfv(GL_LIGHT0, GL_AMBIENT,  &ambient0[0]);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.5);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
+
+	glEnable(GL_LIGHT1);
+	GLfloat position1[4] = {400, 200.0, 3500.0, 1.0};
+	GLfloat diffuse1[3] =  {0.9, 0.7, 0.2};
+	GLfloat specular1[3] = {0.0, 0.0, 0.0};
+	GLfloat ambient1[3] =  {0.0, 0.0, 0.0};
+	glLightfv(GL_LIGHT1, GL_POSITION, &position1[0]);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE,  &diffuse1[0]);
+	glLightfv(GL_LIGHT1, GL_SPECULAR,  &specular1[0]);
+	glLightfv(GL_LIGHT1, GL_AMBIENT,  &ambient1[0]);
+	glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 0.3);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0);
+	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0);
+
+
+	switch (Game::gameState) { //Then the rest
+	case 0: //loading 
+		break;
+	case 1: //active
+		Game::sceneGraph->draw();
+		Game::hud->drawHUD();
+		break;
+	case 2: //paused
+		Game::sceneGraph->draw();
+		Game::hud->drawPaused();
+		break;
+	case 3: //error
+		break;
+	}
 
   glFlush();
   glutSwapBuffers();

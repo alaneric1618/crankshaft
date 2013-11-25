@@ -9,7 +9,7 @@ void HUD::drawPaused() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glDisable(GL_CULL_FACE);
-
+	glDisable(GL_LIGHTING);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
   char string[80];
@@ -21,7 +21,7 @@ void HUD::drawPaused() {
   stringLine = ss.str();  ss.str("");
   strcpy(string, stringLine.c_str());
   
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(1.0, 1.0, 1.0);
 
 	glRasterPos2f(340.0, 200.0);
 	int characters = (int) strlen(string);
@@ -32,7 +32,7 @@ void HUD::drawPaused() {
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
-
+	glEnable(GL_LIGHTING);
 }
 
 
@@ -45,19 +45,13 @@ void HUD::drawHUD() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glDisable(GL_CULL_FACE);
-
+	glDisable(GL_LIGHTING);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	glBegin(GL_QUADS);
-	glColor3f(1.0f, 0.0f, 0.0);
-	glVertex2f(0.0, 450.0);
-	glVertex2f(720.0, 450.0);
-	glVertex2f(720.0, 480.0);
-	glVertex2f(0.0, 480.0);
-	glEnd();
+	
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
-
+	glEnable(GL_LIGHTING);
 }

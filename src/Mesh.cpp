@@ -164,8 +164,8 @@ void Mesh::draw() {
 	
 	if (material.diffuseTexture > 0) {
 		glEnable(GL_TEXTURE_2D);
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-		glBindTexture( GL_TEXTURE_2D, material.diffuseTexture );  
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+		glBindTexture( GL_TEXTURE_2D, material.diffuseTexture);
 	} else {
 		glDisable(GL_TEXTURE_2D);
 		glColor3fv(&material.diffuse[0]);
@@ -173,8 +173,13 @@ void Mesh::draw() {
 
 
 	glBegin(GL_TRIANGLES);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, &material.diffuse[0]);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, &material.specular[0]);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &material.ambient[0]);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, &material.shininess);
 	for(std::vector<Face>::iterator it = faces.begin(); it != faces.end(); ++it) {
 		Face face = *it;
+
 		glTexCoord2d(textures[face.t1].x, textures[face.t1].y);
 		glNormal3f(normals[face.n1].x, normals[face.n1].y, normals[face.n1].z);
 		glVertex3f(vertices[face.v1].x, vertices[face.v1].y, vertices[face.v1].z);

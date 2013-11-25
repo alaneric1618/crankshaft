@@ -19,12 +19,11 @@
 #endif
 
 class Camera : public Updatable, public Drawable {
-
-private:
+public:
 	double time;
   Frame* follow;
 	Frame* look;
-public:
+
   Camera();
   virtual ~Camera();
   virtual void update();

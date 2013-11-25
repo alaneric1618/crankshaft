@@ -44,6 +44,7 @@ class Car : public Group, public Dynamic, public Updatable, public Drawable {
 	double bobAmount = 0.0;
 	double swayAmount = 0.0;
 	double RPM = 0;
+	double brakeLight = 75;
 
 	Car();
 	void steer(double angle);

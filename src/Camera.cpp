@@ -38,6 +38,7 @@ void Camera::pause() {
 }
 
 void Camera::draw() {
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
   gluLookAt(
 	    follow->x,   follow->y, follow->z,     //Eye
