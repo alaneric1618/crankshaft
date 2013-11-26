@@ -154,12 +154,12 @@ void Car::evalPhysics() {
 void Car::collisionDetect() {
 	if (frame->y <= 0) {
 		forces.push_back(new Force(0.0, 0.0, 0.0, 
-															 0.0, -velocity->y*mass*1.2, 0.0));
+					   0.0, -velocity->y*mass*1.2, 0.0));
 		frame->y = 0;
 	}
 	if (frame->y <= 1) {
-		velocity->x = sin(frame->rotationY/57)*RPM;
-		velocity->z = cos(frame->rotationY/57)*RPM;		
+		velocity->x = sin(frame->rotationY/57.29579)*RPM;
+		velocity->z = cos(frame->rotationY/57.29579)*RPM;
 	}
 }
 
