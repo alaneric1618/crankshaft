@@ -2,7 +2,7 @@
 # Author: Eric Alan Bischoff
 # Platform: Mac OS X 10.8.5
 
-TARGET     = barrel-bump
+TARGET     = crankshaft
 CC         = g++
 LD         = g++
 DEBUG      = -g

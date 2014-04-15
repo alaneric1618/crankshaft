@@ -56,6 +56,10 @@ void Game::keyboard (unsigned char key, int x, int y) {
 		Game::sceneGraph->getCar()->brake();
 		break;
 
+	case 'j':
+	  Game::sceneGraph->getCar();
+		break;
+
   
   default: break;
   }
@@ -129,7 +133,7 @@ void Game::update() {
 	switch (Game::gameState) {
 	case 0: //loading 
 		break;
-	case 1: //active
+	case 1: //playing
 		Game::camera->update(); 
 		Game::sceneGraph->update();
 		break;
@@ -151,7 +155,7 @@ void Game::draw(void) {
 	switch (Game::gameState) { //Camera first to use lights
 	case 0: //loading 
 		break;
-	case 1: //active
+	case 1: //playing
 		Game::camera->draw();
 		break;
 	case 2: //paused
@@ -205,7 +209,7 @@ void Game::draw(void) {
 	case 3: //error
 		break;
 	}
-
+				
   glFlush();
   glutSwapBuffers();
 	glutPostRedisplay();
