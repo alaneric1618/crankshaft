@@ -17,7 +17,7 @@
 #include <string>
 
 class HUD {
- public:
-	void drawPaused();
-	void drawHUD();
+public:
+  void drawPaused();
+  void drawHUD();
 };

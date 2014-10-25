@@ -46,17 +46,15 @@
 #endif
 
 class Mesh : public Group, public Updatable, public Drawable {
- private:
-	std::vector<Point3D> vertices;
-	std::vector<Point2D> textures;
-	std::vector<Vector> normals;
-	std::vector<Face> faces;
-	Material material;
-
- public:
-	Mesh(std::string fileName);
-	Mesh(std::string fileName, double offsetX, double offsetY, double scaleX, double scaleY);
-	virtual void draw();
-	virtual void update();
-
+private:
+  std::vector<Point3D> vertices;
+  std::vector<Point2D> textures;
+  std::vector<Vector> normals;
+  std::vector<Face> faces;
+  Material material;
+public:
+  Mesh(std::string fileName);
+  Mesh(std::string fileName, double offsetX, double offsetY, double scaleX, double scaleY);
+  virtual void draw();
+  virtual void update();
 };

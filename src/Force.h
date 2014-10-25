@@ -11,12 +11,11 @@
 class Force {
 
 public:
-	Vector* vector;
-	Point3D* point;
-	Force (double x, double y, double z, double dirX, double dirY, double dirZ);
-	Vector* getRotationVector();
-	Vector* getTranslationVector();
-
+  Vector* vector;
+  Point3D* point;
+  Force (double x, double y, double z, double dirX, double dirY, double dirZ);
+  Vector* getRotationVector();
+  Vector* getTranslationVector();
 };
 
 

@@ -11,15 +11,13 @@
 #endif
 
 class Dynamic {
- public:
-	double mass = 1;
-	Frame* acceleration;
-	Frame* velocity;
-	std::vector<Force*> forces;
-
-	Dynamic();
-	virtual ~Dynamic();
-	virtual void evalPhysics();
-	virtual void collisionDetect();
-
+public:
+  double mass = 1;
+  Frame* acceleration;
+  Frame* velocity;
+  std::vector<Force*> forces;
+  Dynamic();
+  virtual ~Dynamic();
+  virtual void evalPhysics();
+  virtual void collisionDetect();
 };

@@ -20,16 +20,15 @@
 
 class Camera : public Updatable, public Drawable {
 public:
-	double time;
+  double time;
   Frame* follow;
-	Frame* look;
-
+  Frame* look;
   Camera();
   virtual ~Camera();
   virtual void update();
   virtual void draw();
   void pause();
-	void setFollow(Frame* newFollow);
-	void setLook(Frame* newLook);
+  void setFollow(Frame* newFollow);
+  void setLook(Frame* newLook);
 };
 

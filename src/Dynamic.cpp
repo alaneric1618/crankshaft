@@ -4,8 +4,8 @@
 #endif
 
 Dynamic::Dynamic() {
-	Dynamic::acceleration = new Frame();
-	Dynamic::velocity = new Frame();
+  Dynamic::acceleration = new Frame();
+  Dynamic::velocity = new Frame();
 }
 
 Dynamic::~Dynamic() {

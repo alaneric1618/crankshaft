@@ -21,15 +21,15 @@
 #endif
 
 class SceneGraph : public Updatable, public Drawable {
-private:
+ private:
   std::vector< Group* > children;
-	Car* player;
-public:
+  Car* player;
+ public:
   SceneGraph();
   ~SceneGraph();
   virtual void draw();
   virtual void update();
   void add(Group* group);
-	void addCar(Car* car);
-	Car* getCar();
+  void addCar(Car* car);
+  Car* getCar();
 };
